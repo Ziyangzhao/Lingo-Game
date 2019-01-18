@@ -24,16 +24,24 @@ function typer(evt) {
 		document.getElementById("box" + row + "_" + goNextEmptyColumn()).focus();
 	}
 
-	if(evt.key === "Enter") {
+	//console.log(goNextEmptyColumn());
+	if(evt.key === "Enter" && goNextEmptyColumn() === undefined) {
+		
 		check();
+	}
+
+	if(evt.key === "F5") {
+		window.location = window.location;
 	}
 }
 
 function goNextEmptyColumn(e) {
 	for (var i = 0; i < 5; i++) {
-		if(document.getElementById('box' + row + '_' + i).value === "") {
-			return i;
-		}		
+		if (row <= 5) {
+			if(document.getElementById('box' + row + '_' + i).value === "") {
+				return i;
+			}	
+		}	
 	}
 }
 
@@ -81,17 +89,19 @@ function check() {
 	}
 
 	if (guess == rdmWord) {
-		alert('Je hebt gewonnen. Refresh om opnieuw te spelen.');
+		alert('Je hebt gewonnen. Refresh met \"F5\" om opnieuw te spelen.');
 
 	} else if(row >= 5 && guess != rdmWord) {
-		alert('Je hebt verloren. Refresh om opnieuw te spelen. Het juiste woord was:' + ' ' + rdmWord);
+		alert('Je hebt verloren. Het juiste woord was:' + ' ' + rdmWord + ' ' + 'Refresh met \"F5\"om opnieuw te spelen.');
 	}
 
 	if (guess != rdmWord) {
 		row++
 	}
 
-	document.getElementById('box' + row + '_0').value = rdmWord[0]
+	if (row <= 5) {
+		document.getElementById('box' + row + '_0').value = rdmWord[0]
+	}
 }
 
 rows();
